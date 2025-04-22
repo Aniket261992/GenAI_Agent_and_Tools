@@ -19,9 +19,19 @@ api_wrap_wiki= WikipediaAPIWrapper(top_k_results=1,doc_content_chars_max=200)
 arxiv = ArxivQueryRun(api_wrapper=api_wrap_arxiv)
 wiki = WikipediaQueryRun(api_wrapper=api_wrap_wiki)
 
-search = DuckDuckGoSearchRun(name="search")
+def safe_duckduckgo(query: str):
+    try:
+        return DuckDuckGoSearchRun().run(query)
+    except Exception as e:
+        return f"Search failed: {str(e)}"
 
-tools = [arxiv,wiki,search]
+search_tool = Tool(
+    name="WebSearch",
+    func=safe_duckduckgo,
+    description="Use this for general knowledge or current event questions."
+)
+
+tools = [arxiv,wiki,search_tool]
 
 if "key_valid" not in st.session_state:
     st.session_state.key_valid = False
