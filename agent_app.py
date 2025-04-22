@@ -4,6 +4,7 @@ from langchain_openai import ChatOpenAI
 from langchain_community.utilities import ArxivAPIWrapper,WikipediaAPIWrapper
 from langchain_community.tools import ArxivQueryRun,WikipediaQueryRun,DuckDuckGoSearchRun
 from langchain.agents import initialize_agent,AgentType
+from langchain.tools import Tool
 from langchain.callbacks import StreamlitCallbackHandler
 import os
 from dotenv import load_dotenv
